@@ -33,7 +33,7 @@ public abstract class AEncryptionService {
       buffer.append("serviceMark:" + this.serviceMark + "\n");
       buffer.append("currentEnv:" + this.currentEnv + "\n");
       buffer.append("secretKey:" + this.secretKey + "\n");
-      buffer.append("viBase64:" + this.ivvalueBase64);
+      buffer.append("ivBase64:" + this.ivvalueBase64);
       return buffer.toString();
    }
 
