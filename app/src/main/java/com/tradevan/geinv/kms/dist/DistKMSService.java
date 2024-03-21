@@ -98,7 +98,7 @@ public class DistKMSService extends AEncryptionService {
       return this.secretKeyBytes;
    }
 
-   String getSecretKeyHex() throws Exception {
+   public String getSecretKeyHex() throws Exception {
       return new String(SHA1DigestGenerator.toHexBytes(this.secretKeyBytes), "ISO8859-1");
    }
 

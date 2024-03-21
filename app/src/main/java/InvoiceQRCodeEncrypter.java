@@ -4,6 +4,8 @@ import javax.crypto.spec.SecretKeySpec;
 // import javax.xml.bind.DatatypeConverter;
 import jakarta.xml.bind.DatatypeConverter;
 
+import com.tradevan.geinv.kms.dist.DistKMSService;
+
 /**
  * QRCodeEncrypter
  * 
@@ -37,8 +39,10 @@ public class InvoiceQRCodeEncrypter {
     public static void main(String[] args) throws Exception {
 
         // input PASSPHASE to get AESKEY with genKey.bat/ genKey.sh
-        String aesKey = "C03458ECE7485C884AC42D3ED8198A4C";// input your aeskey
-        String invoiceNumAndRandomCode = "AA123456781234";// input your invoiceNumber And RandomCode
+        String passphrase = "12345678";
+        String aesKey = new DistKMSService(passphrase).getSecretKeyHex();
+        System.out.println("aesKey: " + aesKey);
+        String invoiceNumAndRandomCode = "A123456781234";// input your invoiceNumber And RandomCode
 
         InvoiceQRCodeEncrypter aes = new InvoiceQRCodeEncrypter(aesKey);
 
