@@ -1,8 +1,8 @@
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-// import javax.xml.bind.DatatypeConverter;
-import jakarta.xml.bind.DatatypeConverter;
+import java.util.Base64;
+import java.util.HexFormat;
 
 import com.tradevan.geinv.kms.dist.DistKMSService;
 
@@ -64,10 +64,11 @@ public class InvoiceQRCodeEncrypter {
     public InvoiceQRCodeEncrypter(String key) throws Exception {
 
         ivParameterSpec = new IvParameterSpec(
-                DatatypeConverter.parseBase64Binary(SPEC_KEY));
+                Base64.getDecoder().decode(SPEC_KEY));
 
+        HexFormat hexFormat = HexFormat.of();
         secretKeySpec = new SecretKeySpec(
-                DatatypeConverter.parseHexBinary(key), TYPE_SPEC);
+                hexFormat.parseHex(key), TYPE_SPEC);
         cipher = Cipher.getInstance(TYPE_INIT);
     }
 
@@ -82,7 +83,7 @@ public class InvoiceQRCodeEncrypter {
 
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
         byte[] encoded = cipher.doFinal(input.getBytes());
-        String output = new String(DatatypeConverter.printBase64Binary(encoded));
+        String output = new String(Base64.getEncoder().encodeToString(encoded));
 
         return output;
     }
@@ -97,7 +98,7 @@ public class InvoiceQRCodeEncrypter {
     public String decode(String input) throws Exception {
 
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
-        byte[] decoded = DatatypeConverter.parseBase64Binary(input);
+        byte[] decoded = Base64.getDecoder().decode(input);
         String output = new String(cipher.doFinal(decoded));
         return output;
     }
