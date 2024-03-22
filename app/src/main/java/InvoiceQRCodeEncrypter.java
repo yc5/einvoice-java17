@@ -42,7 +42,7 @@ public class InvoiceQRCodeEncrypter {
         String passphrase = "12345678";
         String aesKey = new DistKMSService(passphrase).getSecretKeyHex();
         System.out.println("aesKey: " + aesKey);
-        String invoiceNumAndRandomCode = "A123456781234";// input your invoiceNumber And RandomCode
+        String invoiceNumAndRandomCode = "AA123456781234";// input your invoiceNumber And RandomCode
 
         InvoiceQRCodeEncrypter aes = new InvoiceQRCodeEncrypter(aesKey);
 
