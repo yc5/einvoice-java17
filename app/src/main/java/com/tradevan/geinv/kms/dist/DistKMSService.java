@@ -16,6 +16,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import java.util.HexFormat;
 
 public class DistKMSService extends AEncryptionService {
    private String IVVALUE_STR = "Dt8lyToo17X/XkXaQvihuA==";
@@ -35,12 +36,10 @@ public class DistKMSService extends AEncryptionService {
       this.secretKey = this.dynamicGenAESKey(password);
       this.currentEnv = "dist";
       this.ivvalueBase64 = this.IVVALUE_STR;
-      this.initSecretKey();
+      // this.initSecretKey();
    }
 
    private String dynamicGenAESKey(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-      System.out.println("begin gen key...");
-      String result = null;
       MessageDigest digest = MessageDigest.getInstance("SHA1");
       digest.update(password.getBytes());
       byte[] salt = Base64.getDecoder().decode(this.SALTVALUE_STR.getBytes("UTF-8"));
@@ -53,9 +52,7 @@ public class DistKMSService extends AEncryptionService {
       SecretKey aes = gen.generateKey();
       byte[] keybuf = aes.getEncoded();
       this.secretKeyBytes = keybuf;
-      result = AEncryptionService.encodeBase64(keybuf);
-      System.out.println("end gen key...(OK)");
-      return result;
+      return HexFormat.of().formatHex(keybuf);
    }
 
    public boolean encryptFile(String sourceFile, String targetFile2) throws Exception {
