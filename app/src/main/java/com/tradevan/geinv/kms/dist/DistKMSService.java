@@ -2,7 +2,7 @@ package com.tradevan.geinv.kms.dist;
 
 import com.tradevan.geinv.kms.core.AEncryptionService;
 // import com.tradevan.geinv.kms.core.EncryptionLogger;
-import com.tradevan.geinv.kms.dist.tool.SHA1DigestGenerator;
+// import com.tradevan.geinv.kms.dist.tool.SHA1DigestGenerator;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -96,7 +96,7 @@ public class DistKMSService extends AEncryptionService {
    }
 
    public String getSecretKeyHex() throws Exception {
-      return new String(SHA1DigestGenerator.toHexBytes(this.secretKeyBytes), "ISO8859-1");
+      return HexFormat.of().formatHex(this.secretKeyBytes);
    }
 
    private boolean chiperFile(Cipher chiper, String forLogger, String sourceFile, String targetFile2) throws Exception {
